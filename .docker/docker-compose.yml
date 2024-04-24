@@ -1,0 +1,12 @@
+name: polaris-backend
+
+services:
+  db:
+    container_name: db
+    image: mongo:7
+    ports:
+      - '27017:27017'
+    expose:
+      - '27017'
+    volumes:
+      - ./db:/data
