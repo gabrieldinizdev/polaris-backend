@@ -28,6 +28,40 @@ export class ProductsService {
     return { data: product };
   }
 
+  public async searchByName({
+    filter,
+    pagination: { page, size },
+  }: {
+    filter: string;
+    pagination: PaginationOptionsDTO;
+  }): Promise<PaginationDTO<Product>> {
+    const query: FilterQuery<Product> = {
+      name: {
+        $regex: new RegExp(filter, 'i'),
+      },
+      deletedAt: {
+        $exists: false,
+      },
+    };
+    const options: QueryOptions<Product> = {
+      limit: size,
+      skip: (page - 1) * size,
+      sort: {
+        name: 1,
+      },
+    };
+
+    const total = await this.productModel.countDocuments(query);
+
+    const data = await this.productModel.find(query, {}, options);
+
+    const meta = new PaginationMetaDTO({ page, size, total });
+
+    const pagination = new PaginationDTO<Product>(data, meta);
+
+    return pagination;
+  }
+
   public async findAll({
     pagination: { page, size },
   }: {
@@ -41,6 +75,7 @@ export class ProductsService {
     const options: QueryOptions<Product> = {
       limit: size,
       skip: (page - 1) * size,
+      sort: { createdAt: -1 },
     };
 
     const total = await this.productModel.countDocuments(query);

@@ -61,6 +61,24 @@ export class ProductsController {
   }
 
   @ApiOperation({
+    summary: 'Search Products by name',
+    description:
+      'This request returns all products filtered by name with pagination',
+  })
+  @ApiResponse({
+    description: 'Returns all products filtered by name with pagination',
+    type: FindAllProductsOkResponseDTO,
+    status: HttpStatus.OK,
+  })
+  @Get('search')
+  public searchByName(
+    @Query('filter') filter: string,
+    @Query() pagination: PaginationOptionsDTO,
+  ) {
+    return this.productsService.searchByName({ filter, pagination });
+  }
+
+  @ApiOperation({
     summary: 'Find one Product by id',
     description: 'This request returns one product by id',
   })
