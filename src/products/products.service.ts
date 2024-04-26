@@ -11,7 +11,7 @@ import {
 import { DataResponse } from '@/shared/interfaces/common';
 
 import { CreateProductDTO, UpdateProductDTO } from './dtos';
-import { Product } from './entities/product.entity';
+import { Product } from './entities';
 
 @Injectable()
 export class ProductsService {

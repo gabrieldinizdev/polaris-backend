@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { DataResponseDTO } from './data-response.dto';
+import { DataProductResponseDTO } from './data-response.dto';
 
 export class SoftDeleteOneProductResponseDTO {
   @ApiProperty({
-    type: DataResponseDTO,
+    type: DataProductResponseDTO,
   })
-  public readonly data: DataResponseDTO;
+  public readonly data: DataProductResponseDTO;
 }

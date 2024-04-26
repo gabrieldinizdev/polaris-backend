@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CommonFieldsDTO {
   @ApiProperty({
     description: 'Unique "_id" in the application',
+    example: '6629c827516ccbf6de9a1bd5',
     readOnly: true,
     required: false,
   })

@@ -6,14 +6,13 @@ import { CommonFields } from '@/shared/entities';
 
 @Schema({
   timestamps: true,
-  collection: 'products',
 })
 export class Product extends CommonFields {
   @Prop({
     type: String,
     required: true,
   })
-  public name: string;
+  public readonly name: string;
 
   @Prop({
     type: String,
@@ -21,7 +20,7 @@ export class Product extends CommonFields {
     unique: true,
     required: true,
   })
-  public sku: string;
+  public readonly sku: string;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
