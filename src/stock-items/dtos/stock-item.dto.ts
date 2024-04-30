@@ -1,8 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsInstance, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsNumber } from 'class-validator';
 
-import { ProductDTO } from '@/products/dtos';
 import { CommonFieldsDTO } from '@/shared/dtos/common';
 
 export class StockItemDTO extends CommonFieldsDTO {
@@ -15,10 +14,18 @@ export class StockItemDTO extends CommonFieldsDTO {
   public readonly quantity: number;
 
   @ApiProperty({
-    description: 'Product',
-    type: ProductDTO,
+    description: 'The Linked Product',
+    type: String,
   })
   @IsNotEmpty()
-  @IsInstance(ProductDTO)
-  public readonly product: ProductDTO;
+  @IsMongoId()
+  public readonly product: string;
+
+  @ApiProperty({
+    description: 'The Linked Stock',
+    type: String,
+  })
+  @IsNotEmpty()
+  @IsMongoId()
+  public readonly stock: string;
 }

@@ -99,7 +99,7 @@ export class StocksController {
     status: HttpStatus.OK,
   })
   @Delete(':id')
-  public softDeleteById(@Param('id') id: string) {
+  public softDeleteById(@Param() { id }: FindOneStockByIdDTO) {
     return this.stocksService.softDeleteOneById(id);
   }
 }

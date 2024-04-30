@@ -4,7 +4,7 @@ import { DataProductResponseDTO } from './data-response.dto';
 
 export class CreatedOneProductResponseDTO extends OmitType(
   DataProductResponseDTO,
-  ['deletedAt'],
+  ['deletedAt'] as const,
 ) {}
 
 export class CreateOneProductResponseDTO {

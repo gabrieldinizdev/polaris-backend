@@ -4,7 +4,7 @@ import { DataProductResponseDTO } from './data-response.dto';
 
 class UpdatedOneProductResponseDTO extends OmitType(DataProductResponseDTO, [
   'deletedAt',
-]) {}
+] as const) {}
 
 export class UpdateOneProductResponseDTO {
   @ApiProperty({

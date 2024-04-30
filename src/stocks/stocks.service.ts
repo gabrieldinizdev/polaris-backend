@@ -31,11 +31,7 @@ export class StocksService {
   }: {
     pagination: PaginationOptionsDTO;
   }): Promise<PaginationDTO<Stock>> {
-    const query: FilterQuery<Stock> = {
-      deletedAt: {
-        $exists: false,
-      },
-    };
+    const query: FilterQuery<Stock> = {};
     const options: QueryOptions<Stock> = {
       limit: size,
       skip: (page - 1) * size,

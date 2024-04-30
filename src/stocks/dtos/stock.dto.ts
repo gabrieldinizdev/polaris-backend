@@ -1,10 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsArray, IsInstance, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsMongoId, IsNotEmpty, IsString } from 'class-validator';
 
 import { CommonFieldsDTO } from '@/shared/dtos/common';
-
-import { StockItemDTO } from './stock-item.dto';
+import { StockItemDTO } from '@/stock-items/dtos';
 
 export class StockDTO extends CommonFieldsDTO {
   @ApiProperty({
@@ -21,6 +20,6 @@ export class StockDTO extends CommonFieldsDTO {
     isArray: true,
   })
   @IsArray()
-  @IsInstance(StockItemDTO, { each: true })
+  @IsMongoId({ each: true })
   public readonly items: StockItemDTO[];
 }
