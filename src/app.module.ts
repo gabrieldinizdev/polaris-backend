@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { ProductsModule } from './products/products.module';
+import { ShoppingListItemsModule } from './shopping-list-items/shopping-list-items.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { StockItemsModule } from './stock-items/stock-items.module';
 import { StocksModule } from './stocks/stocks.module';
 
@@ -29,6 +31,10 @@ import { StocksModule } from './stocks/stocks.module';
     StocksModule,
 
     StockItemsModule,
+
+    ShoppingListModule,
+
+    ShoppingListItemsModule,
   ],
 })
 export class AppModule {}

@@ -4,7 +4,7 @@ import { IsMongoId, IsNotEmpty, IsNumber } from 'class-validator';
 
 import { CommonFieldsDTO } from '@/shared/dtos/common';
 
-export class StockItemDTO extends CommonFieldsDTO {
+export class ShoppingListItemDTO extends CommonFieldsDTO {
   @ApiProperty({
     description: 'Quantity of products',
     example: 10,
@@ -23,11 +23,11 @@ export class StockItemDTO extends CommonFieldsDTO {
   public readonly product: string;
 
   @ApiProperty({
-    description: 'The Linked Stock',
+    description: 'The Linked Shopping List',
     type: String,
     example: '662875d4f0b11a3a17533d66',
   })
   @IsNotEmpty()
   @IsMongoId()
-  public readonly stock: string;
+  public readonly list: string;
 }
