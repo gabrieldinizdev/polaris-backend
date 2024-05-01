@@ -16,6 +16,7 @@ export class StockItemDTO extends CommonFieldsDTO {
   @ApiProperty({
     description: 'The Linked Product',
     type: String,
+    example: '662875d4f0b11a3a17533d66',
   })
   @IsNotEmpty()
   @IsMongoId()
@@ -24,6 +25,7 @@ export class StockItemDTO extends CommonFieldsDTO {
   @ApiProperty({
     description: 'The Linked Stock',
     type: String,
+    example: '662875d4f0b11a3a17533d66',
   })
   @IsNotEmpty()
   @IsMongoId()

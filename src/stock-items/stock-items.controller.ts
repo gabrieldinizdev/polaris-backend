@@ -94,7 +94,7 @@ export class StockItemsController {
 
   @ApiOperation({
     summary: 'Delete one stock item by id',
-    description: 'This request remote stock item and returns it',
+    description: 'This request deletes stock item and returns it',
   })
   @ApiResponse({
     description: 'Delete stock item by id response',

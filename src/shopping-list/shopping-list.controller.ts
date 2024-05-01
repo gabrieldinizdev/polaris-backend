@@ -27,7 +27,7 @@ import {
 } from './responses';
 import { ShoppingListService } from './shopping-list.service';
 
-@ApiTags('ShoppingList')
+@ApiTags('Shopping List')
 @Controller('shopping-list')
 export class ShoppingListController {
   public constructor(
