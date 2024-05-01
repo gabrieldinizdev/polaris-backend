@@ -2,14 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { PaginationMetaDTO } from '@/shared/dtos/pagination';
 
-import { DataResponseDTO } from './data-response.dto';
+import { DataProductResponseDTO } from './data-response.dto';
 
 export class FindAllProductsOkResponseDTO {
   @ApiProperty({
-    type: DataResponseDTO,
+    type: DataProductResponseDTO,
     isArray: true,
   })
-  public readonly data: DataResponseDTO[];
+  public readonly data: DataProductResponseDTO[];
 
   @ApiProperty()
   public readonly meta: PaginationMetaDTO;

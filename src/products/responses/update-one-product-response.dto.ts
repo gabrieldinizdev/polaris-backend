@@ -1,10 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 
-import { DataResponseDTO } from './data-response.dto';
+import { DataProductResponseDTO } from './data-response.dto';
+
+class UpdatedOneProductResponseDTO extends OmitType(DataProductResponseDTO, [
+  'deletedAt',
+] as const) {}
 
 export class UpdateOneProductResponseDTO {
   @ApiProperty({
-    type: DataResponseDTO,
+    type: UpdatedOneProductResponseDTO,
   })
-  public readonly data: DataResponseDTO;
+  public readonly data: UpdatedOneProductResponseDTO;
 }

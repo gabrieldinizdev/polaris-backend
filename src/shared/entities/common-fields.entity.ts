@@ -1,7 +1,11 @@
 import { Prop } from '@nestjs/mongoose';
 
+import { Transform } from 'class-transformer';
+import { ObjectId } from 'mongoose';
+
 export class CommonFields {
-  public readonly _id: string;
+  @Transform(({ value }) => value.toString())
+  public readonly _id: ObjectId;
 
   @Prop({
     type: Date,

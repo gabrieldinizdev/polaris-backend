@@ -11,7 +11,7 @@ export class ProductDTO extends CommonFieldsDTO {
   })
   @IsString()
   @IsNotEmpty()
-  public name: string;
+  public readonly name: string;
 
   @ApiProperty({
     description: 'Stock Keeping Unit',
@@ -20,5 +20,5 @@ export class ProductDTO extends CommonFieldsDTO {
   })
   @IsString()
   @IsNotEmpty()
-  public sku: string;
+  public readonly sku: string;
 }

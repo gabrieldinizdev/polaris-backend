@@ -22,7 +22,7 @@ import { ProductsService } from './products.service';
 import {
   CreateOneProductResponseDTO,
   FindAllProductsOkResponseDTO,
-  FindOneProductsOkResponseDTO,
+  FindOneProductOkResponseDTO,
   SoftDeleteOneProductResponseDTO,
   UpdateOneProductResponseDTO,
 } from './responses';
@@ -42,8 +42,8 @@ export class ProductsController {
     status: HttpStatus.CREATED,
   })
   @Post()
-  public createOne(@Body() createUserDto: CreateProductDTO) {
-    return this.productsService.createOne(createUserDto);
+  public createOne(@Body() dto: CreateProductDTO) {
+    return this.productsService.createOne(dto);
   }
 
   @ApiOperation({
@@ -84,13 +84,11 @@ export class ProductsController {
   })
   @ApiResponse({
     description: 'Returns one product by id',
-    type: FindOneProductsOkResponseDTO,
+    type: FindOneProductOkResponseDTO,
     status: HttpStatus.OK,
   })
   @Get(':id')
   public findOneById(@Param() { id }: FindOneProductByIdDTO) {
-    console.log({ id });
-
     return this.productsService.findOneById(id);
   }
 
@@ -107,9 +105,9 @@ export class ProductsController {
   @Patch(':id')
   public updateOneById(
     @Param() { id }: FindOneProductByIdDTO,
-    @Body() updateProductDto: UpdateProductDTO,
+    @Body() dto: UpdateProductDTO,
   ) {
-    return this.productsService.updateOneById(id, updateProductDto);
+    return this.productsService.updateOneById(id, dto);
   }
 
   @ApiOperation({
