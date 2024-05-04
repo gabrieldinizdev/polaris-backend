@@ -6,6 +6,10 @@ import { CommonFields } from '@/shared/entities';
 
 @Schema({
   timestamps: true,
+  virtuals: true,
+  id: false,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
 })
 export class Stock extends CommonFields {
   @Prop({
