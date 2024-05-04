@@ -58,8 +58,9 @@ export class StocksController {
   }
 
   @ApiOperation({
-    summary: 'Find all Stocks',
-    description: 'This request returns all stocks with pagination',
+    summary: 'Returns all items from Stock by ID',
+    description:
+      'This request returns all items from stock with pagination by ID',
   })
   @ApiResponse({
     description: 'Returns a stock with pagination and your items',
