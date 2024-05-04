@@ -20,21 +20,6 @@ export class Stock extends CommonFields {
 
 export const StockSchema = SchemaFactory.createForClass(Stock);
 
-// StockSchema.virtual('items', {
-//   ref: 'StockItem',
-//   localField: '_id',
-//   foreignField: 'stock',
-//   justOne: false,
-// });
-
-// StockSchema.virtual('totalItems', {
-//   ref: 'StockItem',
-//   localField: '_id',
-//   foreignField: 'stock',
-//   justOne: false,
-//   count: true,
-// });
-
 export const StockDefinition: ModelDefinition = {
   name: Stock.name,
   schema: StockSchema,
