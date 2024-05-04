@@ -18,6 +18,7 @@ import {
   CreateOneStockResponseDTO,
   FindAllStocksOkResponseDTO,
   FindOneStockOkResponseDTO,
+  FindOneStockWithItemsOkResponseDTO,
   SoftDeleteOneStockResponseDTO,
   UpdateOneStockResponseDTO,
 } from './responses';
@@ -54,6 +55,23 @@ export class StocksController {
   @Get()
   public findAll(@Query() pagination: PaginationOptionsDTO) {
     return this.stocksService.findAll({ pagination });
+  }
+
+  @ApiOperation({
+    summary: 'Find all Stocks',
+    description: 'This request returns all stocks with pagination',
+  })
+  @ApiResponse({
+    description: 'Returns a stock with pagination and your items',
+    type: FindOneStockWithItemsOkResponseDTO,
+    status: HttpStatus.OK,
+  })
+  @Get(':id/items')
+  public returnItemsFromStockById(
+    @Param() { id }: FindOneStockByIdDTO,
+    @Query() pagination: PaginationOptionsDTO,
+  ) {
+    return this.stocksService.returnItemsFromStockById(id, { pagination });
   }
 
   @ApiOperation({

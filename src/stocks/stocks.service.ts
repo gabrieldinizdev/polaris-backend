@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { FilterQuery, Model, QueryOptions } from 'mongoose';
+import mongoose, { FilterQuery, Model, QueryOptions } from 'mongoose';
 
 import {
   PaginationDTO,
@@ -22,6 +22,72 @@ export class StocksService {
 
   public async createOne(dto: CreateStockDTO): Promise<DataResponse<Stock>> {
     const stock = await this.stockModel.create(dto);
+
+    return { data: stock };
+  }
+
+  public async returnItemsFromStockById(
+    id: string,
+    {
+      pagination: { page, size },
+    }: {
+      pagination: PaginationOptionsDTO;
+    },
+  ): Promise<DataResponse<Stock[]>> {
+    const stock = await this.stockModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(id),
+          deletedAt: {
+            $exists: false,
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'stockitems',
+          localField: '_id',
+          foreignField: 'stock',
+          as: 'items',
+          pipeline: [
+            {
+              $sort: { createdAt: -1 },
+            },
+            {
+              $limit: +size,
+            },
+            {
+              $skip: (+page - 1) * +size,
+            },
+            {
+              $lookup: {
+                from: 'products',
+                localField: 'product',
+                foreignField: '_id',
+                as: 'product',
+                pipeline: [
+                  {
+                    $match: {
+                      deletedAt: {
+                        $exists: false,
+                      },
+                    },
+                  },
+                  {
+                    $project: {
+                      name: 1,
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              $unwind: '$product',
+            },
+          ],
+        },
+      },
+    ]);
 
     return { data: stock };
   }

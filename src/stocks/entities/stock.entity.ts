@@ -6,6 +6,10 @@ import { CommonFields } from '@/shared/entities';
 
 @Schema({
   timestamps: true,
+  virtuals: true,
+  id: false,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
 })
 export class Stock extends CommonFields {
   @Prop({
@@ -15,6 +19,21 @@ export class Stock extends CommonFields {
 }
 
 export const StockSchema = SchemaFactory.createForClass(Stock);
+
+// StockSchema.virtual('items', {
+//   ref: 'StockItem',
+//   localField: '_id',
+//   foreignField: 'stock',
+//   justOne: false,
+// });
+
+// StockSchema.virtual('totalItems', {
+//   ref: 'StockItem',
+//   localField: '_id',
+//   foreignField: 'stock',
+//   justOne: false,
+//   count: true,
+// });
 
 export const StockDefinition: ModelDefinition = {
   name: Stock.name,
