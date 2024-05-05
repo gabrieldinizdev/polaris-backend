@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { FilterQuery, Model, QueryOptions } from 'mongoose';
+import mongoose, { FilterQuery, Model, QueryOptions } from 'mongoose';
 
 import {
   PaginationDTO,
@@ -26,6 +26,72 @@ export class ShoppingListService {
     const stock = await this.shoppingListModel.create(dto);
 
     return { data: stock };
+  }
+
+  public async returnItemsFromShoppingListById(
+    id: string,
+    {
+      pagination: { page, size },
+    }: {
+      pagination: PaginationOptionsDTO;
+    },
+  ): Promise<DataResponse<ShoppingList[]>> {
+    const shoppingList = await this.shoppingListModel.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(id),
+          deletedAt: {
+            $exists: false,
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'shoppinglistitems',
+          localField: '_id',
+          foreignField: 'list',
+          as: 'items',
+          pipeline: [
+            {
+              $sort: { createdAt: -1 },
+            },
+            {
+              $limit: +size,
+            },
+            {
+              $skip: (+page - 1) * +size,
+            },
+            {
+              $lookup: {
+                from: 'products',
+                localField: 'product',
+                foreignField: '_id',
+                as: 'product',
+                pipeline: [
+                  {
+                    $match: {
+                      deletedAt: {
+                        $exists: false,
+                      },
+                    },
+                  },
+                  {
+                    $project: {
+                      name: 1,
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              $unwind: '$product',
+            },
+          ],
+        },
+      },
+    ]);
+
+    return { data: shoppingList };
   }
 
   public async findAll({

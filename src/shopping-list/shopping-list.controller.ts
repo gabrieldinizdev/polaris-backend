@@ -25,6 +25,7 @@ import {
   SoftDeleteOneShoppingListResponseDTO,
   UpdateOneShoppingListResponseDTO,
 } from './responses';
+import { FindOneStockWithItemsOkResponseDTO } from './responses';
 import { ShoppingListService } from './shopping-list.service';
 
 @ApiTags('Shopping List')
@@ -60,6 +61,26 @@ export class ShoppingListController {
   @Get()
   public findAll(@Query() pagination: PaginationOptionsDTO) {
     return this.shoppingListService.findAll({ pagination });
+  }
+
+  @ApiOperation({
+    summary: 'Returns all items from ShoppingList by ID',
+    description:
+      'This request returns all items from ShoppingList with pagination by ID',
+  })
+  @ApiResponse({
+    description: 'Returns a ShoppingList with pagination and your items',
+    type: FindOneStockWithItemsOkResponseDTO,
+    status: HttpStatus.OK,
+  })
+  @Get(':id/items')
+  public returnItemsFromStockById(
+    @Param() { id }: FindOneShoppingListByIdDTO,
+    @Query() pagination: PaginationOptionsDTO,
+  ) {
+    return this.shoppingListService.returnItemsFromShoppingListById(id, {
+      pagination,
+    });
   }
 
   @ApiOperation({

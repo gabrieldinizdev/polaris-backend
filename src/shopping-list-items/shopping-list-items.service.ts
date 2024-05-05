@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { FilterQuery, Model, QueryOptions } from 'mongoose';
+import mongoose, { FilterQuery, Model, QueryOptions } from 'mongoose';
 
 import {
   PaginationDTO,
@@ -23,9 +23,18 @@ export class ShoppingListItemsService {
   public async createOne(
     dto: CreateShoppingListItemDTO,
   ): Promise<DataResponse<ShoppingListItem>> {
-    const stockItem = await this.shoppingListItemModel.create(dto);
+    const list = new mongoose.Types.ObjectId(dto.list);
+    const product = new mongoose.Types.ObjectId(dto.product);
 
-    return { data: stockItem };
+    const payload = {
+      ...dto,
+      list,
+      product,
+    };
+
+    const shoppingListItem = await this.shoppingListItemModel.create(payload);
+
+    return { data: shoppingListItem };
   }
 
   public async findAll({
